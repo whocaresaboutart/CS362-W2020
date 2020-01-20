@@ -17,6 +17,7 @@ player_names = ["Annie","*Ben","*Carla"]
 nV = testUtility.GetNumVictory(player_names)
 nC = testUtility.GetNumCurses(player_names)
 
+
 #Define box
 box = testUtility.GetBoxes(nV)
 

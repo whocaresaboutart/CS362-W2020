@@ -56,10 +56,10 @@ def GetSupplyOrder():
                 5:['Duchy','Market','Council Room','Festival','Laboratory','Library','Mine','Witch'],
                 6:['Gold','Adventurer'],8:['Province']}
 
-def GetSupply(box, nV, nC, numPlayers):
+def GetSupply(box, nV, nC, numPlayers, numCards = 10):
     boxlist = [k for k in box]
     random.shuffle(boxlist)
-    random10 = boxlist[:10]
+    random10 = boxlist[:numCards]
     supply = defaultdict(list, [(k, box[k]) for k in random10])
 
     # The supply always has these cards

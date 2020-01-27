@@ -213,3 +213,49 @@ class TestPlayer(TestCase):
         self.assertEqual(2, summary['Smithy'])
         self.assertEqual(5, summary['Duchy'])
         self.assertEqual(9, summary['Bureaucrat'])
+
+class GameOver(TestCase):
+    def dataSetUp(self):
+        # Data setup
+        self.player_names = ["*Annie", "Ben", "*Carla"]
+        self.nV = testUtility.GetNumVictory(self.player_names)
+        self.nC = testUtility.GetNumCurses(self.player_names)
+        self.box = testUtility.GetBoxes(self.nV)
+        self.supply_order = testUtility.GetSupplyOrder()
+
+        # Setup supply with 5 cards
+        self.supply = testUtility.GetSupply(self.box, self.nV, self.nC, len(self.player_names), 5)
+        self.trash = []
+        # set player
+        self.player = Dominion.Player(self.player_names[1]) # Ben
+
+    def test_GameOver(self):
+        # init data
+        self.dataSetUp()
+
+        # test to make sure game is not over
+        self.assertEqual(False, Dominion.gameover(self.supply))
+
+        # remove all the provinces from the supply
+        del self.supply["Province"]
+
+        # test to make sure game is over
+        self.assertEqual(True, Dominion.gameover(self.supply))
+
+        # make a new supply
+        self.supply = testUtility.GetSupply(self.box, self.nV, self.nC, len(self.player_names), 5)
+
+        # test to make sure game is not over
+        self.assertEqual(False, Dominion.gameover(self.supply))
+
+        # remove 3 supply cards
+        removed = 0
+        for stack in self.supply:
+            if removed == 3:
+                break
+            if stack != 'Province':
+                self.supply[stack] = []
+                removed += 1
+
+        # test to make sure game is over
+        self.assertEqual(True, Dominion.gameover(self.supply))

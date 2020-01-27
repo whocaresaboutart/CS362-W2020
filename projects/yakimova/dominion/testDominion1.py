@@ -10,24 +10,13 @@ import random
 from collections import defaultdict
 import testUtility
 
-#Get player names
+#Data setup
 player_names = ["Annie","*Ben","*Carla"]
-
-#number of curses and victory cards
 nV = testUtility.GetNumVictory(player_names)
 nC = testUtility.GetNumCurses(player_names)
-
-
-#Define box
 box = testUtility.GetBoxes(nV)
-
-#Get Supply Order
 supply_order = testUtility.GetSupplyOrder()
-
-#Generate a random supply from the box
 supply = testUtility.GetSupply(box, nV, nC, len(player_names))
-
-#initialize the trash
 trash = []
 
 #Costruct the Player objects
